@@ -1,0 +1,11 @@
+{
+  "name": "waveorb-util",
+  "version": "0.1.0",
+  "description": "Frontend utilities for Waveorb",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eldoy/waveorb-util"
+  },
+  "author": "Vidar Eldøy <vidar@eldoy.com>",
+  "license": "ISC"
+}
