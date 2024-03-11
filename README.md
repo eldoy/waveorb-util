@@ -17,17 +17,17 @@ npm i waveorb-util
 Copy the `dist/util.js` file to the `app/assets/js/` folder in you application.
 
 ```js
-const util = require('waveorb-util')
+var util = require('waveorb-util')
 
 // Include some
 global.globals = ['sleep', 'clearErrors']
-for (const fn of globals) {
+for (var fn of globals) {
   global[fn] = util[fn]
 }
 
 // Include all
 global.globals = Object.keys(util)
-for (const fn in util) {
+for (var fn in util) {
   global[fn] = util[fn]
 }
 ```
@@ -55,13 +55,13 @@ npm i waveorb-util
 
 Usage:
 ```js
-const { sleep } = require('waveorb-util')
+var { sleep } = require('waveorb-util')
 ```
 
 To install functions globally server side, use the `init` hook:
 
 ```js
-const util = require('waveorb-util')
+var util = require('waveorb-util')
 global.sleep = util.sleep
 ```
 
