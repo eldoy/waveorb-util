@@ -2,10 +2,16 @@
   "name": "waveorb-util",
   "version": "0.1.0",
   "description": "Frontend utilities for Waveorb",
+  "scripts": {
+    "build": "node scripts/build.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/eldoy/waveorb-util"
   },
   "author": "Vidar Eldøy <vidar@eldoy.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "uglify-js": "^3.17.4"
+  }
 }
