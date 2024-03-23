@@ -1,4 +1,4 @@
-var load = async function (path, into) {
+window.load = async function (path, into) {
   var res = await fetch(path)
   res = await res.text()
   if (into) {
@@ -13,15 +13,15 @@ var load = async function (path, into) {
   return res
 }
 
-var sleep = function (s = 0.5) {
+window.sleep = function (s = 0.5) {
   return new Promise((r) => setTimeout(r, s * 1000))
 }
 
-var goBack = function () {
+window.goBack = function () {
   history.go(-(store('root') || 1))
 }
 
-var navCount = function (add) {
+window.navCount = function (add) {
   if (!add) {
     store('root', null)
     store('last', null)
@@ -35,22 +35,22 @@ var navCount = function (add) {
   store('last', path)
 }
 
-var isImage = function (name) {
+window.isImage = function (name) {
   return /\.(gif|jpe?g|tiff|png|bmp|svg)$/i.test(name)
 }
 
-var closeWindow = function (e) {
+window.closeWindow = function (e) {
   if (e.code == 'Escape') {
     goBack()
   }
 }
 
-var truncate = function (str, l = 20) {
+window.truncate = function (str, l = 20) {
   if (str.length < l) return str
   return str.slice(0, l) + '...'
 }
 
-var setActiveLink = function (options = {}) {
+window.setActiveLink = function (options = {}) {
   document.querySelectorAll(options.selector || 'a').forEach(function (el) {
     if (el.pathname == location.pathname) {
       el.classList.add(options.active || 'active')
@@ -58,17 +58,17 @@ var setActiveLink = function (options = {}) {
   })
 }
 
-var logout = function (options = {}, fn) {
+window.logout = function (options = {}, fn) {
   var name = options.cookie || 'session'
   if (cookie(name)) cookie(name, null)
   if (fn) fn()
 }
 
-var toggleMenu = function (el) {
+window.toggleMenu = function (el) {
   q(el || '#main-menu', (m) => m.classList.toggle('open'))
 }
 
-var closeMenus = function (event) {
+window.closeMenus = function (event) {
   event.stopPropagation()
   var el = event.target,
     toggle
@@ -88,7 +88,7 @@ var closeMenus = function (event) {
   })
 }
 
-var track = function () {
+window.track = function () {
   var t = store('track') || []
   var path = location.pathname + location.search
   if (t[t.length - 1] != path) {
@@ -98,7 +98,7 @@ var track = function () {
   return store('track', t)
 }
 
-var back = function () {
+window.back = function () {
   var t = store('track') || []
   var path = t[t.length - 2]
   if (path) {
@@ -107,17 +107,17 @@ var back = function () {
   history.go(-1)
 }
 
-var last = function () {
+window.last = function () {
   var t = store('track') || []
   return t[t.length - 2] || ''
 }
 
-var handleToggleHelp = function (toggler) {
+window.handleToggleHelp = function (toggler) {
   var h = toggler.nextElementSibling
   h.style.display = h.style.display == 'none' ? 'block' : 'none'
 }
 
-var isVisible = function (el, container) {
+window.isVisible = function (el, container) {
   let { top, height, bottom } = el.getBoundingClientRect()
   let containerRect = container.getBoundingClientRect()
 
@@ -126,15 +126,15 @@ var isVisible = function (el, container) {
     : bottom - containerRect.bottom <= height
 }
 
-var longtime = function (d) {
+window.longtime = function (d) {
   return time(d, { lang: 'no', dateStyle: 'full', timeStyle: 'long' })
 }
 
-var mediumtime = function (d) {
+window.mediumtime = function (d) {
   return time(d, { lang: 'no', dateStyle: 'short', timeStyle: 'medium' })
 }
 
-var smoothScroll = function (target, offset = 0) {
+window.smoothScroll = function (target, offset = 0) {
   if (typeof target == 'string') {
     target = q(target)
   }
@@ -149,7 +149,7 @@ var smoothScroll = function (target, offset = 0) {
   })
 }
 
-var scrollToError = function (form = '') {
+window.scrollToError = function (form = '') {
   if (typeof form == 'string') {
     form = q(form)
   }
@@ -159,24 +159,11 @@ var scrollToError = function (form = '') {
   smoothScroll(em.parentNode, 20)
 }
 
-var scrollModal = function (top = 0) {
+window.scrollModal = function (top = 0) {
   return q('.modal-content').scroll({ top })
 }
 
-var download = function (url) {
-  var a = document.createElement('a')
-  a.setAttribute('target', '_blank')
-  a.setAttribute('href', url)
-  a.style.display = 'none'
-  document.body.append(a)
-  a.click()
-
-  setTimeout(function () {
-    a.remove()
-  }, 100)
-}
-
-var saveFile = function (link) {
+window.saveFile = function (link) {
   var url = link.href
   var filename = url.substring(url.lastIndexOf('/') + 1).split('?')[0]
   var xhr = new XMLHttpRequest()
@@ -194,12 +181,25 @@ var saveFile = function (link) {
   xhr.send()
 }
 
-var dropdownOpen = function (a) {
+window.download = function (url) {
+  var a = document.createElement('a')
+  a.setAttribute('target', '_blank')
+  a.setAttribute('href', url)
+  a.style.display = 'none'
+  document.body.append(a)
+  a.click()
+
+  setTimeout(function () {
+    a.remove()
+  }, 100)
+}
+
+window.dropdownOpen = function (a) {
   a.classList.toggle('toggle-open')
   q('#main-menu', (el) => el.classList.toggle('toggle-open'))
 }
 
-var dropdownBlur = function (opt = {}) {
+window.dropdownBlur = function (opt = {}) {
   if (!opt.toggler) opt.toggler = 'toggle-open'
   if (!opt.ref) opt.ref = 'data-toggle'
 
@@ -225,7 +225,7 @@ var dropdownBlur = function (opt = {}) {
   })
 }
 
-var copy = function (input) {
+window.copy = function (input) {
   if (typeof input == 'string') {
     input = document.querySelector(input)
   }
@@ -239,7 +239,7 @@ var copy = function (input) {
   }
 }
 
-var popupCopy = function (el) {
+window.popupCopy = function (el) {
   var source = el.getAttribute('data-source')
   clearTimeout(window.__timeout[source])
   copy(`#${source}`)
@@ -251,34 +251,4 @@ var popupCopy = function (el) {
   window.__timeout[source] = setTimeout(function () {
     el.classList.remove('popup')
   }, 3000)
-}
-
-module.exports = {
-  load,
-  sleep,
-  goBack,
-  navCount,
-  isImage,
-  closeWindow,
-  truncate,
-  setActiveLink,
-  logout,
-  toggleMenu,
-  closeMenus,
-  track,
-  back,
-  last,
-  handleToggleHelp,
-  isVisible,
-  longtime,
-  mediumtime,
-  smoothScroll,
-  scrollToError,
-  scrollModal,
-  saveFile,
-  download,
-  dropdownOpen,
-  dropdownBlur,
-  copy,
-  popupCopy
 }
