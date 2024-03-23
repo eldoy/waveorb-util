@@ -240,14 +240,14 @@ var copy = function (input) {
 }
 
 var popupCopy = function (el) {
+  if (!window.__timeout) {
+    window.__timeout = {}
+  }
   var source = el.getAttribute('data-source')
   clearTimeout(window.__timeout[source])
   copy(`#${source}`)
   el.classList.remove('popup')
-  el.classList.add('popup')
-  if (!window.__timeout) {
-    window.__timeout = {}
-  }
+  el.classList.add('popup')  
   window.__timeout[source] = setTimeout(function () {
     el.classList.remove('popup')
   }, 3000)
